@@ -1,11 +1,19 @@
 import React from "react";
 import styled from "styled-components";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { titleDateState } from "../atom";
-import { formatISO } from "date-fns";
+import { formatTitleDate } from "../utils/formatDate";
+import { NextMonthButton, PrevMonthButton } from "./Button";
+
 const CalendarTitle = () => {
-  const [titleDate, setTitleDate] = useRecoilState(titleDateState);
-  return <div>{formatISO(titleDate, { representation: "date" })}</div>;
+  const titleDate = useRecoilValue(titleDateState);
+  return (
+    <div>
+      <PrevMonthButton />
+      <h1>{formatTitleDate(titleDate)}</h1>
+      <NextMonthButton />
+    </div>
+  );
 };
 
 export default CalendarTitle;
