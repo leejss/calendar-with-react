@@ -2,12 +2,19 @@ import React from "react";
 import { useRecoilState } from "recoil";
 import { titleDateState } from "../atom";
 import { addMonths, subMonths } from "date-fns";
+import { GrLinkNext, GrLinkPrevious } from "react-icons/gr";
+import { StyledButton } from "./Styled";
+
 export const NextMonthButton = () => {
   const [_, setTitleDate] = useRecoilState(titleDateState);
   const handleClick = () => {
     setTitleDate((prevDate) => addMonths(prevDate, 1));
   };
-  return <button onClick={handleClick}>Add Month</button>;
+  return (
+    <StyledButton onClick={handleClick}>
+      <GrLinkNext />
+    </StyledButton>
+  );
 };
 
 export const PrevMonthButton = () => {
@@ -15,5 +22,9 @@ export const PrevMonthButton = () => {
   const handleClick = () => {
     setTitleDate((prevDate) => subMonths(prevDate, 1));
   };
-  return <button onClick={handleClick}>Sub Month</button>;
+  return (
+    <StyledButton onClick={handleClick}>
+      <GrLinkPrevious />
+    </StyledButton>
+  );
 };

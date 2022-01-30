@@ -22,12 +22,14 @@ export function generateDays(titleDate: Date): DateArray {
   return result;
 }
 
-export function generateCalendarDate(days: DateArray) {
-  const calendar = initCalednar(Math.ceil(days.length / 7) + 1);
+export function generateCalendarDate(days: DateArray): Date[][] {
+  const calendar = initCalendar(6);
+
   days.forEach((day) => {
     const index = getWeekOfMonth(day) - 1;
     calendar[index].push(day);
   });
+
   const result = calendar.map((week, index) => {
     const full = new Array(7).fill(null);
     for (let i = 0; i < 7; i++) {
@@ -37,16 +39,41 @@ export function generateCalendarDate(days: DateArray) {
     }
     return full;
   });
-  console.log(result);
+
+  result[0] = flipArray(result[0]).reverse();
+  if (isEmpty(result[5])) {
+    result.pop();
+  }
+
+  return result;
 }
 
-function initCalednar(length: number) {
+function initCalendar(length: number) {
   const result = [];
   for (let i = 0; i < length; i++) {
-    result.push(new Array());
+    result.push(new Array<Date>());
   }
   return result;
 }
 
-// function processCalendarDate() {
-// }
+function flipArray(arr: Date[]) {
+  let i = 0;
+  const extracted = [];
+  while (arr[i]) {
+    extracted.push(arr[i]);
+    i++;
+  }
+  const reversed = extracted.reverse();
+  const result = arr.map((item, index) => {
+    if (reversed[index]) return reversed[index];
+    else return item;
+  });
+  return result;
+}
+
+function isEmpty(arr: Date[]): boolean {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i]) return false;
+  }
+  return true;
+}

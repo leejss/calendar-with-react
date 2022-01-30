@@ -1,28 +1,30 @@
-import { formatISO, startOfMonth } from "date-fns";
 import React from "react";
 import { useRecoilValue } from "recoil";
-import { titleDateState } from "../atom";
-import { formatDay } from "../utils/formatDate";
-import { generateCalendarDate, generateDays } from "../utils/generateDate";
-import { CalendarContainer, StlyedDiv } from "./Styled";
-import WeekRow from "./WeekRow";
+import styled from "styled-components";
+import { calendarDayState, titleDateState } from "../atom";
+import CalendarDay from "./CalendarDay";
+import { StlyedDiv } from "./Styled";
+
+export const CalendarContainer = styled.div`
+  display: grid;
+  gap: 10px;
+`;
 
 const CalendarBody = () => {
-  const titleDate = useRecoilValue(titleDateState);
-  const days = generateDays(titleDate);
-  generateCalendarDate(days);
-  const handleClick = () => {};
-
+  const days = useRecoilValue(calendarDayState);
   return (
     <CalendarContainer>
-      {days.map((date, index) => {
+      {days.map((w, i) => {
         return (
-          <div
-            key={formatISO(date, { representation: "date" })}
-            className={index === 0 ? "test" : index === 1 ? "test2" : ""}
-          >
-            <button data-date={date}>{formatDay(date)}</button>
-          </div>
+          <StlyedDiv key={i}>
+            {w.map((d, j) => (
+              <CalendarDay
+                key={10 * j + i + 10}
+                day={d}
+                hasEvent={d ? true : false}
+              />
+            ))}
+          </StlyedDiv>
         );
       })}
     </CalendarContainer>

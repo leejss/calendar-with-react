@@ -1,8 +1,9 @@
 import React from "react";
+import { StlyedDiv } from "./Styled";
 
-const WeekRow = () => {
+const CalendarWeek = () => {
   return (
-    <>
+    <StlyedDiv>
       <div>일</div>
       <div>월</div>
       <div>화</div>
@@ -10,8 +11,8 @@ const WeekRow = () => {
       <div>목</div>
       <div>금</div>
       <div>토</div>
-    </>
+    </StlyedDiv>
   );
 };
 
-export default WeekRow;
+export default CalendarWeek;
