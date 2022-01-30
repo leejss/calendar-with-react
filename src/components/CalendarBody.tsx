@@ -3,13 +3,14 @@ import React from "react";
 import { useRecoilValue } from "recoil";
 import { titleDateState } from "../atom";
 import { formatDay } from "../utils/formatDate";
-import { generateDate } from "../utils/generateDate";
+import { generateCalendarDate, generateDays } from "../utils/generateDate";
 import { CalendarContainer, StlyedDiv } from "./Styled";
 import WeekRow from "./WeekRow";
 
 const CalendarBody = () => {
   const titleDate = useRecoilValue(titleDateState);
-  const days = generateDate(titleDate);
+  const days = generateDays(titleDate);
+  generateCalendarDate(days);
   const handleClick = () => {};
 
   return (

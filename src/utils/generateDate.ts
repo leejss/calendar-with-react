@@ -1,8 +1,14 @@
-import { startOfMonth, endOfMonth, isWithinInterval, addDays } from "date-fns";
+import {
+  startOfMonth,
+  endOfMonth,
+  isWithinInterval,
+  addDays,
+  getWeekOfMonth,
+} from "date-fns";
 
 type DateArray = Array<Date>;
 
-export function generateDate(titleDate: Date): DateArray {
+export function generateDays(titleDate: Date): DateArray {
   const result: DateArray = [];
   const firstDayOfMonth = startOfMonth(titleDate);
   const endDayOfMonth = endOfMonth(titleDate);
@@ -15,3 +21,32 @@ export function generateDate(titleDate: Date): DateArray {
   }
   return result;
 }
+
+export function generateCalendarDate(days: DateArray) {
+  const calendar = initCalednar(Math.ceil(days.length / 7) + 1);
+  days.forEach((day) => {
+    const index = getWeekOfMonth(day) - 1;
+    calendar[index].push(day);
+  });
+  const result = calendar.map((week, index) => {
+    const full = new Array(7).fill(null);
+    for (let i = 0; i < 7; i++) {
+      if (week[i]) {
+        full[i] = week[i];
+      }
+    }
+    return full;
+  });
+  console.log(result);
+}
+
+function initCalednar(length: number) {
+  const result = [];
+  for (let i = 0; i < length; i++) {
+    result.push(new Array());
+  }
+  return result;
+}
+
+// function processCalendarDate() {
+// }
