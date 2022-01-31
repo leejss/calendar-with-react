@@ -1,16 +1,21 @@
 import React from "react";
 import CalendarBody from "./CalendarBody";
 import CalendarTitle from "./CalendarTitle";
-import { RecoilRoot } from "recoil";
-import CalendarWeek from "./CalendarWeek";
 
-const Calendar = () => {
+import CalendarWeek from "./CalendarWeek";
+import { EventArray, ScheduleArray } from "../types";
+
+interface CalendarProps {
+  events: EventArray | null;
+}
+
+const Calendar = ({ events }: CalendarProps) => {
   return (
-    <RecoilRoot>
+    <section>
       <CalendarTitle />
       <CalendarWeek />
-      <CalendarBody />
-    </RecoilRoot>
+      <CalendarBody events={events} />
+    </section>
   );
 };
 

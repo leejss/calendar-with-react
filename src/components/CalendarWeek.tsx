@@ -3,7 +3,7 @@ import { StlyedDiv } from "./Styled";
 
 const CalendarWeek = () => {
   return (
-    <StlyedDiv>
+    <StlyedDiv marginBottom={10}>
       <div>일</div>
       <div>월</div>
       <div>화</div>

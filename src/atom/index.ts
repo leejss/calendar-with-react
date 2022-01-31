@@ -1,3 +1,4 @@
+import type { MutableRefObject } from "react";
 import { atom, selector } from "recoil";
 import { generateCalendarDate, generateDays } from "../utils/generateDate";
 

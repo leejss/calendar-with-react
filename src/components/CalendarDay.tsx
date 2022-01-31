@@ -1,29 +1,19 @@
-import type { FC } from "react";
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { formatDay } from "../utils/formatDate";
-
-interface DayProps {
-  day: Date;
-  hasEvent?: boolean;
-}
 
 const DayContainer = styled.div`
   display: grid;
   gap: 5px;
-  button {
-    border: none;
-    background: none;
-    width: 100%;
-    &:active {
-      background-color: coral;
-    }
-  }
   > div {
     display: flex;
     justify-content: center;
     align-items: center;
   }
+`;
+
+const EventWrapper = styled.div`
+  min-height: 5px;
 `;
 
 const EventIndicator = styled.div`
@@ -33,11 +23,47 @@ const EventIndicator = styled.div`
   background-color: coral;
 `;
 
-const CalendarDay: FC<DayProps> = ({ day, hasEvent = false }) => {
+interface DayButtonProps {
+  isToday: boolean;
+}
+
+const DayButton = styled.button<DayButtonProps>`
+  position: relative;
+  border: none;
+  background: none;
+  /* width: 100%; */
+  ${({ isToday }) =>
+    isToday &&
+    css`
+      color: #fff;
+      font-weight: bold;
+      &::before {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: #3535f7;
+      }
+    `}
+`;
+
+interface DayProps {
+  day: Date;
+  hasEvent: boolean;
+  isToday: boolean;
+}
+
+const CalendarDay = ({ day, hasEvent, isToday }: DayProps) => {
+  const dayText = day ? formatDay(day) : null;
   return (
     <DayContainer>
-      <button>{day ? formatDay(day) : null}</button>
-      <div>{hasEvent && <EventIndicator />}</div>
+      <DayButton isToday={isToday}>{dayText}</DayButton>
+      <EventWrapper>{hasEvent && <EventIndicator />}</EventWrapper>
     </DayContainer>
   );
 };
