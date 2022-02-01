@@ -3,7 +3,7 @@ import CalendarBody from "./CalendarBody";
 import CalendarTitle from "./CalendarTitle";
 
 import CalendarWeek from "./CalendarWeek";
-import { EventArray, ScheduleArray } from "../types";
+import { EventArray } from "../types";
 
 interface CalendarProps {
   events: EventArray | null;

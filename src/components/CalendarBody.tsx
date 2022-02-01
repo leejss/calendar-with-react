@@ -25,9 +25,6 @@ const CalendarBody = ({ events }: CalendarBodyProps) => {
         return (
           <StlyedDiv key={i}>
             {w.map((date, j) => {
-              console.log("date", date);
-              console.log("TODAY", TODAY);
-
               return (
                 <CalendarDay
                   key={10 * j + i + 10}

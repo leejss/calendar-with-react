@@ -12,9 +12,6 @@ code {
     monospace;
 }
 
-.test {
-  grid-area: sat;
-}
-.test2 {
-  grid-area: sun;
+.clicked {
+  color: greenyellow;
 }

@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled, { css } from "styled-components";
+import clickedStateQueue from "../utils/clickedStateQueue";
 import { formatDay } from "../utils/formatDate";
 
 const DayContainer = styled.div`
@@ -23,6 +24,29 @@ const EventIndicator = styled.div`
   background-color: coral;
 `;
 
+const circle = (background: string) => `
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: ${background};
+  }
+`;
+
+const todayIndicator = () => `
+  ${circle("#3535f7")}
+   
+`;
+const clickedIndicator = () => `
+  ${circle("#000")}
+`;
+
 interface DayButtonProps {
   isToday: boolean;
 }
@@ -37,19 +61,14 @@ const DayButton = styled.button<DayButtonProps>`
     css`
       color: #fff;
       font-weight: bold;
-      &::before {
-        content: "";
-        position: absolute;
-        z-index: -1;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background-color: #3535f7;
-      }
+      ${todayIndicator()}
     `}
+
+  &.clicked {
+    color: #fff;
+    font-weight: bold;
+    ${clickedIndicator()};
+  }
 `;
 
 interface DayProps {
@@ -59,10 +78,23 @@ interface DayProps {
 }
 
 const CalendarDay = ({ day, hasEvent, isToday }: DayProps) => {
+  let ref: HTMLButtonElement | null = null;
   const dayText = day ? formatDay(day) : null;
+  const handleClick = () => {
+    if (!ref) return;
+    clickedStateQueue.enqueue(ref);
+  };
   return (
     <DayContainer>
-      <DayButton isToday={isToday}>{dayText}</DayButton>
+      <DayButton
+        ref={(el) => {
+          if (el) ref = el;
+        }}
+        isToday={isToday}
+        onClick={handleClick}
+      >
+        {dayText}
+      </DayButton>
       <EventWrapper>{hasEvent && <EventIndicator />}</EventWrapper>
     </DayContainer>
   );
